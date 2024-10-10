@@ -2,17 +2,24 @@ const { Car } = require("../models");
 
 async function getAllCars(req, res) {
     try {
+        // console.log("proses kapan request")
+        // console.log(req.requestTime)
+        // console.log("proses siapa yang request")
+        // console.log(req.username)
+        // console.log("proses API apa yang diminta")
+        // console.log(req.originalUrl)
+
         const cars = await Car.findAll();
 
         res.status(200).json({
-            status: "200",
+            statusCode: "200",
             message: "Success get cars data",
             isSuccess: true,
             data: { cars },
         });
     } catch (error) {
         res.status(500).json({
-            status: "500",
+            statusCode: "500",
             message: "Failed to get cars data",
             isSuccess: false,
             error: error.message,
@@ -27,20 +34,20 @@ async function getCarById(req, res) {
 
         if (!car) {
             return res.status(404).json({
-                status: "404",
+                statusCode: "404",
                 message: "Car Not Found!",
             });
         }
 
         res.status(200).json({
-            status: "200",
+            statusCode: "200",
             message: "Success get cars data",
             isSuccess: true,
             data: { car },
         });
     } catch (error) {
         res.status(500).json({
-            status: "500",
+            statusCode: "500",
             message: "Failed to get cars data",
             isSuccess: false,
             error: error.message,
@@ -57,20 +64,20 @@ async function deleteCarById(req, res) {
             await car.destroy();
 
             res.status(200).json({
-                status: "200",
+                statusCode: "200",
                 message: "Success get cars data",
                 isSuccess: true,
                 data: { car },
             });
         } else {
             res.status(404).json({
-                status: "404",
+                statusCode: "404",
                 message: "Car Not Found!",
             });
         }
     } catch (error) {
         res.status(500).json({
-            status: "500",
+            statusCode: "500",
             message: "Failed to get cars data",
             isSuccess: false,
             error: error.message,
@@ -94,20 +101,20 @@ async function updateCar(req, res) {
             await car.save();
 
             res.status(200).json({
-                status: "200",
+                statusCode: "200",
                 message: "Success get cars data",
                 isSuccess: true,
                 data: { car },
             });
         } else {
             res.status(404).json({
-                status: "404",
+                statusCode: "404",
                 message: "Car Not Found!",
             });
         }
     } catch (error) {
         res.status(500).json({
-            status: "500",
+            statusCode: "500",
             message: "Failed to get cars data",
             isSuccess: false,
             error: error.message,
@@ -121,14 +128,14 @@ async function createCar(req, res) {
     try {
         const newCar = await Car.create({ plate, model, type, year });
         res.status(200).json({
-            status: "Success",
+            statusCode: "Success",
             message: "Ping successfully",
             isSuccess: true,
             data: { newCar },
         });
     } catch (error) {
         res.status(500).json({
-            status: "500",
+            statusCode: "500",
             message: "Failed to get cars data",
             isSuccess: false,
             error: error.message,

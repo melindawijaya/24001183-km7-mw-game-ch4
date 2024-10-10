@@ -5,14 +5,14 @@ async function getAllDrivers(req, res) {
     const drivers = await Driver.findAll();
 
     res.status(200).json({
-      status: "200",
+      statusCode: "200",
       message: "Success get drivers data",
       isSuccess: true,
       data: { drivers },
     });
   } catch (error) {
     res.status(500).json({
-      status: "500",
+      statusCode: "500",
       message: "Failed to get drivers data",
       isSuccess: false,
       error: error.message,
@@ -27,20 +27,20 @@ async function getDriverById(req, res) {
 
     if (!driver) {
       return res.status(404).json({
-        status: "404",
+        statusCode: "404",
         message: "Driver Not Found!",
       });
     }
 
     res.status(200).json({
-      status: "200",
+      statusCode: "200",
       message: "Success get drivers data",
       isSuccess: true,
       data: driver,
     });
   } catch (error) {
     res.status(500).json({
-      status: "500",
+      statusCode: "500",
       message: "Failed to get drivers data",
       isSuccess: false,
     });
@@ -55,20 +55,20 @@ async function deleteDriverById(req, res) {
       await driver.destroy();
 
       res.status(200).json({
-        status: "200",
+        statusCode: "200",
         message: "Success get drivers data",
         isSuccess: true,
         data: driver,
       });
     } else {
       res.status(200).json({
-        status: "204",
+        statusCode: "204",
         message: "Success delete drivers data",
       });
     }
   } catch (error) {
     res.status(500).json({
-      status: "500",
+      statusCode: "500",
       message: "Failed to get cars data",
       isSuccess: false,
       error: error.message,
