@@ -21,6 +21,9 @@ module.exports = {
             phoneNumber: {
                 type: Sequelize.STRING,
             },
+            photoProfile: {
+                type: Sequelize.TEXT,
+            }
         });
     },
     async down(queryInterface, Sequelize) {

@@ -3,7 +3,7 @@ const router = express.Router();
 const carController = require("../controller/carController");
 
 // Cars API
-router.post("/", carController.createCar);
+router.post("/", upload.array(),carController.createCar);
 router.get("/", carController.getAllCars);
 router.get("/:id", carController.getCarById);
 router.delete("/:id", carController.deleteCarById);
