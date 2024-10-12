@@ -136,7 +136,7 @@ async function createUser(req, res) {
     const fileName = split[0]
 
     // 2. upload image ke server
-    const uploadedImage = await imagekit.upload({
+    const uploadedImage = await Imagekit.upload({
         file: file.buffer,
         fileName: `Profile-${Date.now()}.${ext}`
     })

@@ -1,4 +1,5 @@
 const { Car } = require("../models");
+const Imagekit = require("../lib/imagekit");
 
 async function getAllCars(req, res) {
     try {
@@ -124,19 +125,49 @@ async function updateCar(req, res) {
 
 async function createCar(req, res) {
     const { plate, model, type, year } = req.body;
+    const carsImages = req.files;
+
+    if (!carsImages || carsImages.length === 0) {
+        return res.status(400).json({
+            status: "Failed",
+            message: "No images uploaded",
+            isSuccess: false,
+        });
+    }
 
     try {
-        const newCar = await Car.create({ plate, model, type, year });
-        res.status(200).json({
-            statusCode: "Success",
-            message: "Ping successfully",
+        let uploadedImages = [];
+        for (let i = 0; i < carsImages.length; i++) {
+            const file = carsImages[i];
+            const split = file.originalname.split(".");
+            const ext = split[split.length - 1];
+
+            const uploadedImage = await Imagekit.upload({
+                file: file.buffer,
+                fileName: `Car-${Date.now()}-${i}.${ext}`
+            });
+
+            uploadedImages.push(uploadedImage.url);
+        }
+
+        const newCar = await Car.create({ 
+            plate, 
+            model, 
+            type, 
+            year,
+            carsImage: uploadedImages 
+        });
+
+        res.status(201).json({
+            statusCode: "201",
+            message: "Mobil berhasil ditambahkan",
             isSuccess: true,
             data: { newCar },
         });
     } catch (error) {
         res.status(500).json({
             statusCode: "500",
-            message: "Failed to get cars data",
+            message: "Gagal menambahkan data mobil",
             isSuccess: false,
             error: error.message,
         });

@@ -21,6 +21,9 @@ module.exports = {
             year: {
                 type: Sequelize.INTEGER,
             },
+            carsImage: {
+                type: Sequelize.ARRAY(Sequelize.TEXT),
+            }
         });
     },
     async down(queryInterface, Sequelize) {
