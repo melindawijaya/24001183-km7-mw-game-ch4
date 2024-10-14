@@ -4,12 +4,15 @@ const usersRoute = require("./routes/usersRoute");
 const carsRoute = require("./routes/carsRoute");
 const sparepartsRoute = require("./routes/sparepartsRoute");
 const driverRoutes = require("./routes/driverRoute");
+const dashboardRoute = require("./routes/dashboardRoute");
 
 const app = express();
 const port = 3000;
 
 // Middleware : Reading json from body (client)
 app.use(express.json());
+// Middleware : agar dari form kebaca
+app.use(express.urlencoded({ extended:false }))
 
 // moddleware : LOGGING !! third party package
 app.use(morgan());
@@ -35,6 +38,22 @@ app.use((req, res, next) => {
   next();
 }) 
 
+// middleware : bisa membuat express aplication kita membaca static file
+app.use(express.static(`${__dirname}/public`))
+
+// panggil view engine
+app.set("view engine", "ejs");
+
+app.get("/dashboard/admin/", async (req, res) => {
+  try {
+    res.render("index.ejs",{
+      greeting: "Hello FSW 2 dengan data dinamis"
+    })
+  } catch (error) {
+    console.log(error)
+  }
+})
+
 // Health Check
 app.get("/", async (req, res) => {
   try {
@@ -52,6 +71,9 @@ app.get("/", async (req, res) => {
     });
   }
 });
+
+// dashboard routes
+app.use("/dashboard/admin", dashboardRoute);
 
 // Routes
 app.use("/api/v1/users", usersRoute);
