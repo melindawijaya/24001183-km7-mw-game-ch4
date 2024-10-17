@@ -50,15 +50,15 @@ app.set("view engine", "ejs");
 app.use(expressEJSLayout);
 app.set("layout","layout.ejs")
 
-app.get("/dashboard/admin/", async (req, res) => {
-  try {
-    res.render("index.ejs",{
-      greeting: "Hello FSW 2 dengan data dinamis"
-    })
-  } catch (error) {
-    console.log(error)
-  }
-})
+// app.get("/dashboard/admin/", async (req, res) => {
+//   try {
+//     res.render("index.ejs",{
+//       greeting: "Hello FSW 2 dengan data dinamis"
+//     })
+//   } catch (error) {
+//     console.log(error)
+//   }
+// })
 
 // Health Check
 app.get("/", async (req, res) => {

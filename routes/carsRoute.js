@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const carController = require("../controller/carController");
-const upload = require('../middeware/uploader')
+const upload = require('../middleware/uploader')
 
 // Cars API
 router.post("/", upload.array("carsImage"),carController.createCar);

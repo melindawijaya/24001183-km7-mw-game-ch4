@@ -5,22 +5,29 @@ const imagekit = require("../lib/imagekit");
 async function userPage(req, res) {
     try {
         const users = await User.findAll();
-        console.log(users.data)
+        // console.log(users)
         res.render("users/index", {
-            title: "User Page", 
+            title: "Users Page", 
             users
         })
     } catch (error) {
-        res.status(500).json({
-            status: "Failed",
-            message: "Failed to get users data",
-            isSuccess: false,
-            data: null,
-            error: error.message,
-        });
+        res.render("error", {
+            message: error.message
+        })
     }
 }
 
+async function createPage(req, res) {
+    try {
+        res.render("users/create",{
+            title: "Create Page",
+        })
+    } catch (error) {
+        res.render("error", {
+            message: error.message
+        })
+    }
+}
 
 async function createUser(req, res) {
     const newUser = req.body;
@@ -54,19 +61,6 @@ async function createUser(req, res) {
     } catch (error) {
       console.log("Error creating user:", error);
       res.redirect("/error");
-    }
-}
-
-async function createPage(req, res) {
-    try {
-        res.render("users/create",{
-            title: "",
-            input: ["name","age"]
-        })
-    } catch (error) {
-        res.render("error", {
-            message: error.message
-        })
     }
 }
 
